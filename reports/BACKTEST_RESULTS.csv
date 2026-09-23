@@ -1,0 +1,11 @@
+instrument,asset_class,symbol_actual,timeframe,test_start,test_end,model,deposit,currency,net_profit,total_return_pct,cagr_pct,max_equity_dd_pct,profit_factor,recovery_factor,sharpe_ratio,total_trades,winning_months,losing_months,max_losing_months_in_calendar_year,forward_profit_pct,forward_dd_pct,status,report_file,notes
+EURUSD,Forex,EURUSD,H1,2019-09-23,2026-09-08,Every tick based on real ticks,10000,USD,247.08,2.4708,,10.02,1.02,0.23,0.10,474,,,,,,COMPLETED_BELOW_TARGET,,MetaQuotes-Demo; harus diuji ulang pada Exness
+USDJPY,Forex,USDJPY,H1,2019-09-23,2026-09-08,Every tick based on real ticks,10000,USD,,,,,,,,,,,,,,IN_PROGRESS,,MetaQuotes-Demo; backtest awal
+XAUUSD,Metal,,H4,,,Every tick based on real ticks,10000,USD,,,,,,,,,,,,,,,PENDING,,
+XAGUSD,Metal,,H4,,,Every tick based on real ticks,10000,USD,,,,,,,,,,,,,,,PENDING,,
+JP225,Index,,H4,,,Every tick based on real ticks,10000,USD,,,,,,,,,,,,,,,PENDING,,
+US500,Index,,H4,,,Every tick based on real ticks,10000,USD,,,,,,,,,,,,,,,PENDING,,
+BTCUSD,Crypto,,H4,,,Every tick based on real ticks,10000,USD,,,,,,,,,,,,,,,PENDING,,
+ETHUSD,Crypto,,H4,,,Every tick based on real ticks,10000,USD,,,,,,,,,,,,,,,PENDING,,
+UKOIL,Energy,,H4,,,Every tick based on real ticks,10000,USD,,,,,,,,,,,,,,,PENDING,,
+USOIL,Energy,,H4,,,Every tick based on real ticks,10000,USD,,,,,,,,,,,,,,,PENDING,,
