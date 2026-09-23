@@ -1,0 +1,12 @@
+InpMagicNumber=26092304
+InpSignalTimeframe=16388
+InpMaxSpreadPoints=180
+InpFastEMA=35
+InpSlowEMA=150
+InpMinADX=22.0
+InpStopATR=2.6
+InpTakeProfitR=2.2
+InpRiskPerTradePct=0.35
+InpMaxDailyLossPct=2.0
+InpMaxEquityDrawdownPct=25.0
+InpTrailATR=2.3
