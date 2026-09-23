@@ -1,0 +1,11 @@
+asset_class,symbol_example,timeframe,preset,notes
+Forex,EURUSD,H4,EURUSD_H4.set,Major forex
+Forex,USDJPY,H4,USDJPY_H4.set,Major forex
+Metal,XAUUSD,H4,XAUUSD_H4.set,Gold
+Metal,XAGUSD,H4,XAGUSD_H4.set,Silver
+Index,JP225,H4,JP225_H4.set,Nikkei 225
+Index,US500,H4,US500_H4.set,S&P 500 derivative
+Crypto,BTCUSD,H4,BTCUSD_H4.set,Bitcoin
+Crypto,ETHUSD,H4,ETHUSD_H4.set,Ethereum
+Energy,UKOIL,H4,UKOIL_H4.set,Brent proxy
+Energy,USOIL,H4,USOIL_H4.set,WTI proxy
