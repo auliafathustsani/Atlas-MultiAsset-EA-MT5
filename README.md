@@ -223,7 +223,6 @@ Laporan lengkap mengenai perancangan EA, metode pengujian, optimasi, hasil, pemb
 
 **[Laporan Pengembangan dan Pengujian Atlas Multi-Asset EA](https://docs.google.com/document/d/1TIrWp_0VWNckjZRkrZyUCGnrWec2N5R0WstIZOfRjlM/edit?usp=sharing)**
 
-Pastikan pengaturan akses Google Docs menggunakan opsi **siapa saja yang memiliki link dapat melihat** agar laporan tidak dapat diubah oleh orang lain.
 
 ## Cara Instalasi
 
