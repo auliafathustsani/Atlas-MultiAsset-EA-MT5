@@ -45,6 +45,16 @@ Atlas-MultiAsset-EA-MT5/
 │   ├── UKOIL_H4.set
 │   └── USOIL_H4.set
 ├── Reports/
+│   ├── EURUSD/
+│   │   ├── EURUSD_H1_Baseline.html
+│   │   ├── EURUSD_H1_Baseline.pdf
+│   │   ├── EURUSD_H1_Optimized.html
+│   │   └── EURUSD_H1_Optimized.pdf
+│   ├── USDJPY/
+│   │   ├── USDJPY_H1_Baseline.html
+│   │   ├── USDJPY_H1_Baseline.pdf
+│   │   ├── USDJPY_H1_Optimized.html
+│   │   └── USDJPY_H1_Optimized.pdf
 │   ├── LAPORAN_PROYEK.md
 │   ├── BACKTEST_RESULTS.csv
 │   ├── OPTIMIZATION_PROTOCOL.md
@@ -186,7 +196,7 @@ Penggunaan model 1 minute OHLC hanya ditujukan untuk proses pencarian parameter.
 | ADX Period | 14 |
 | Minimum ADX | 15 |
 | RSI Period | 14 |
-| Minimum RSI long | 52 |
+| Minimum RSI long | 50 |
 | Maximum RSI short | 44 |
 | ATR Period | 14 |
 | Stop-loss ATR | 2,2 |
@@ -196,20 +206,24 @@ Penggunaan model 1 minute OHLC hanya ditujukan untuk proses pencarian parameter.
 
 ## Hasil Backtest Sementara
 
-| Instrumen | Net Profit | Return 7 Tahun | Profit Factor | Max. Equity DD | Recovery Factor | Sharpe Ratio | Total Transaksi |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| EURUSD H1 | USD 247,08 | 2,47% | 1,02 | 10,02% | 0,23 | 0,10 | 474 |
-| USDJPY H1 | USD 990,36 | 9,90% | 1,09 | 11,72% | 0,83 | 0,39 | 534 |
+### Perbandingan Baseline dan Hasil Optimasi
 
-Kedua instrumen menghasilkan net profit positif dan memiliki maximum equity drawdown di bawah batas 30%. USDJPY memberikan hasil lebih baik dibandingkan EURUSD berdasarkan net profit, profit factor, recovery factor, dan Sharpe ratio.
+| Instrumen | Tahap | Net Profit | Return 7 Tahun | Profit Factor | Max. Equity DD | Recovery Factor | Sharpe Ratio | Total Transaksi |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| EURUSD H1 | Baseline | -USD 234,68 | -2,35% | 0,98 | 10,09% | -0,22 | -0,09 | 510 |
+| EURUSD H1 | Optimized | USD 247,08 | 2,47% | 1,02 | 10,02% | 0,23 | 0,10 | 474 |
+| USDJPY H1 | Baseline | USD 325,46 | 3,25% | 1,03 | 12,52% | 0,25 | 0,13 | 533 |
+| USDJPY H1 | Optimized | USD 1.549,68 | 15,50% | 1,14 | 10,75% | 1,42 | 0,57 | 544 |
 
-Meskipun demikian, profit factor kedua instrumen masih mendekati 1 sehingga keunggulan strategi belum kuat. Return yang diperoleh merupakan return untuk keseluruhan periode sekitar tujuh tahun, bukan return setiap tahun.
+Optimasi meningkatkan kinerja kedua instrumen. Pada EURUSD, net profit berubah dari negatif menjadi positif, sedangkan maximum equity drawdown turun tipis dari 10,09% menjadi 10,02%. Peningkatan paling jelas diperoleh pada USDJPY, yaitu net profit naik dari USD 325,46 menjadi USD 1.549,68 dan maximum equity drawdown turun dari 12,52% menjadi 10,75%.
+
+USDJPY memberikan hasil lebih baik dibandingkan EURUSD berdasarkan net profit, profit factor, recovery factor, dan Sharpe ratio. Walaupun demikian, return tersebut merupakan akumulasi selama periode sekitar tujuh tahun, bukan return tahunan. Dengan demikian, hasil sementara belum mencapai target return bulanan 3–5% maupun target return tahunan 50–70%.
 
 ## Evaluasi Target
 
 | Kriteria | Batas | Hasil Sementara | Status |
 |---|---:|---:|---|
-| Maximum drawdown | 25–30% | 10,02% dan 11,72% | Memenuhi |
+| Maximum drawdown | Maksimal 25–30% | 10,02% dan 10,75% | Memenuhi |
 | Return bulanan | 3–5% | Belum tercapai | Belum memenuhi |
 | Return tahunan | 50–70% | Belum tercapai | Belum memenuhi |
 | Bulan rugi per tahun | Maksimal 6 | Belum dihitung | Belum dinilai |
@@ -278,7 +292,6 @@ Skrip akan membantu menyaring kandidat berdasarkan profit, profit factor, drawdo
 - Pengujian delapan instrumen lainnya.
 - Perhitungan jumlah bulan rugi setiap tahun.
 - Stress test menggunakan spread dan delay berbeda.
-- Penyimpanan laporan HTML Strategy Tester.
 - Validasi terhadap target return bulanan dan tahunan.
 
 ## Kesimpulan
