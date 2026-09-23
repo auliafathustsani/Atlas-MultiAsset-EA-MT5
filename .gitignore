@@ -1,0 +1,10 @@
+*.ex5
+*.log
+*.tmp
+*.bak
+.env
+credentials*
+config/account*
+Tester/cache/
+Tester/history/
+Reports/raw/
