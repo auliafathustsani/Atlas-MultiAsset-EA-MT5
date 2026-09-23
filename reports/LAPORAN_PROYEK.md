@@ -1,9 +1,9 @@
 # Laporan Proyek Expert Advisor Multi-Aset pada MetaTrader 5
 
-Nama: ........................................  
-NIM: .........................................  
-Mata kuliah: .................................  
-Tanggal pengujian: ...........................
+Nama: Aulia Fathus Tsani
+NIM: 24/534388/PA/22661 
+Mata kuliah: Sains Manajement 
+
 
 ## Abstrak
 
