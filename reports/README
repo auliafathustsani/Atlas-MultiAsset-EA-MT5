@@ -1,28 +1,58 @@
-````markdown
 # IG-MATPEA Industrial v5
 
 **Industrial Grade Multi-Asset Trend-Pullback Expert Advisor for MetaTrader 5**
 
-IG-MATPEA (Industrial Grade Multi-Asset Trend-Pullback Expert Advisor) adalah Expert Advisor (EA) berbasis MQL5 untuk MetaTrader 5 yang dirancang menggunakan pendekatan **trend-following dan pullback** dengan fokus pada manajemen risiko, konsistensi sinyal, dan pengujian historis.
+![Platform](https://img.shields.io/badge/platform-MetaTrader%205-blue)
+![Language](https://img.shields.io/badge/language-MQL5-orange)
+![Version](https://img.shields.io/badge/version-v5.00-green)
+![Martingale](https://img.shields.io/badge/martingale-no-red)
+![Grid](https://img.shields.io/badge/grid-no-red)
+![HFT](https://img.shields.io/badge/HFT-no-red)
+
+IG-MATPEA (Industrial Grade Multi-Asset Trend-Pullback Expert Advisor) adalah Expert Advisor (EA) berbasis MQL5 untuk MetaTrader 5 yang dirancang menggunakan pendekatan *trend-following* dan *pullback* dengan fokus pada manajemen risiko, konsistensi sinyal, dan pengujian historis.
 
 EA ini dirancang untuk dapat digunakan pada berbagai kelas aset, namun hasil backtest yang terdokumentasi dan tervalidasi dalam proyek ini adalah **EURUSDm**.
+
+## Daftar Isi
+
+1. [Tujuan Proyek](#1-tujuan-proyek)
+2. [Karakteristik EA](#2-karakteristik-ea)
+3. [Strategi Trading](#3-strategi-trading)
+4. [Manajemen Risiko](#4-manajemen-risiko)
+5. [Prinsip yang Tidak Digunakan](#5-prinsip-yang-tidak-digunakan)
+6. [Optimasi Parameter](#6-optimasi-parameter)
+7. [Parameter Pass 153](#7-parameter-pass-153)
+8. [Hasil Backtest](#8-hasil-backtest)
+9. [Forward Test](#9-forward-test)
+10. [Evaluasi Performa](#10-evaluasi-performa)
+11. [Keterbatasan Data](#11-keterbatasan-data)
+12. [Prinsip Reproduksibilitas](#12-prinsip-reproduksibilitas)
+13. [Struktur Repository](#13-struktur-repository)
+14. [Cara Menjalankan EA](#14-cara-menjalankan-ea)
+15. [Menjalankan Backtest](#15-menjalankan-backtest)
+16. [Forward Testing](#16-forward-testing)
+17. [Risk Disclaimer](#17-risk-disclaimer)
+18. [Kesimpulan](#18-kesimpulan)
+19. [Project Status](#project-status)
+
+---
 
 ## 1. Tujuan Proyek
 
 Tujuan utama pengembangan IG-MATPEA Industrial v5 adalah:
 
-- Mengembangkan Expert Advisor otomatis pada MetaTrader 5 menggunakan MQL5.
-- Menerapkan strategi trend-following dan pullback secara sistematis.
-- Menggunakan indikator teknikal sebagai filter entry.
-- Menerapkan manajemen risiko berbasis volatilitas.
-- Membatasi drawdown dan risiko transaksi.
-- Menghindari penggunaan strategi Martingale, Grid, dan HFT.
-- Melakukan backtest historis dan forward test untuk mengevaluasi performa strategi.
-- Menghasilkan EA dengan struktur kode dan parameter yang dapat direproduksi.
+* Mengembangkan Expert Advisor otomatis pada MetaTrader 5 menggunakan MQL5.
+* Menerapkan strategi *trend-following* dan *pullback* secara sistematis.
+* Menggunakan indikator teknikal sebagai filter entry.
+* Menerapkan manajemen risiko berbasis volatilitas.
+* Membatasi drawdown dan risiko transaksi.
+* Menghindari penggunaan strategi Martingale, Grid, dan HFT.
+* Melakukan backtest historis dan forward test untuk mengevaluasi performa strategi.
+* Menghasilkan EA dengan struktur kode dan parameter yang dapat direproduksi.
 
 ## 2. Karakteristik EA
 
-| Komponen | Spesifikasi |
+| Item | Nilai |
 |---|---|
 | Nama EA | IG-MATPEA Industrial v5 |
 | Platform | MetaTrader 5 |
@@ -47,36 +77,31 @@ IG-MATPEA menggunakan kombinasi beberapa indikator teknikal untuk menentukan kon
 
 ### 3.1 Trend Filter
 
-Arah tren ditentukan menggunakan:
-
-- Fast EMA = 50
-- Slow EMA = 200
+Arah tren ditentukan menggunakan **Fast EMA 50** dan **Slow EMA 200**.
 
 **Kondisi Buy:**
-- Fast EMA berada di atas Slow EMA.
-- Kondisi tren memenuhi filter ADX dan DI.
-- Harga mengalami pullback terhadap tren naik.
+
+* Fast EMA berada di atas Slow EMA.
+* Kondisi tren memenuhi filter ADX dan DI.
+* Harga mengalami pullback terhadap tren naik.
 
 **Kondisi Sell:**
-- Fast EMA berada di bawah Slow EMA.
-- Kondisi tren memenuhi filter ADX dan DI.
-- Harga mengalami pullback terhadap tren turun.
+
+* Fast EMA berada di bawah Slow EMA.
+* Kondisi tren memenuhi filter ADX dan DI.
+* Harga mengalami pullback terhadap tren turun.
 
 ### 3.2 ADX dan Directional Index
 
 ADX digunakan untuk menyaring kekuatan tren.
 
-```text
-ADX Period  = 14
-Minimum ADX = 21
-````
+* ADX Period = 14
+* Minimum ADX = 21
 
 Filter DI:
 
-```text
-Buy  : DI+ > DI-
-Sell : DI- > DI+
-```
+* Buy: `DI+ > DI-`
+* Sell: `DI- > DI+`
 
 EA juga menggunakan kondisi penguatan ADX untuk meningkatkan kualitas sinyal.
 
@@ -84,9 +109,7 @@ EA juga menggunakan kondisi penguatan ADX untuk meningkatkan kualitas sinyal.
 
 EA menunggu terjadinya pullback terhadap tren sebelum membuka posisi.
 
-```text
-Pullback ATR = 0.20
-```
+* Pullback ATR = 0.20
 
 ATR digunakan sebagai ukuran volatilitas sehingga jarak pullback dapat menyesuaikan kondisi pasar.
 
@@ -94,23 +117,19 @@ ATR digunakan sebagai ukuran volatilitas sehingga jarak pullback dapat menyesuai
 
 RSI digunakan sebagai filter tambahan.
 
-```text
-RSI Period = 14
-
-Buy RSI Min = 45
-Buy RSI Max = 60
-
-Sell RSI Min = 28
-Sell RSI Max = 45
-```
+| Parameter | Nilai |
+|---|---|
+| RSI Period | 14 |
+| Buy RSI Minimum | 45 |
+| Buy RSI Maximum | 60 |
+| Sell RSI Minimum | 28 |
+| Sell RSI Maximum | 45 |
 
 ### 3.5 Candle Quality Filter
 
 EA memeriksa kualitas candle entry berdasarkan rasio body terhadap range candle.
 
-```text
-Minimum Body Ratio = 0.60
-```
+* Minimum Body Ratio = 0.60
 
 Filter ini digunakan untuk menghindari entry pada candle dengan body yang terlalu kecil terhadap keseluruhan range.
 
@@ -118,58 +137,29 @@ Filter ini digunakan untuk menghindari entry pada candle dengan body yang terlal
 
 IG-MATPEA Industrial v5 menggunakan beberapa mekanisme pengendalian risiko.
 
-### Risk per Trade
-
-```text
-Risk = 0.75% equity per trade
-```
+| Mekanisme | Nilai |
+|---|---|
+| Risk per Trade | 0.75% equity per trade |
+| Stop Loss | 2.0 ATR |
+| Take Profit | 3.0 ATR |
+| Break-Even Trigger | 1.0 ATR |
+| Trailing Stop | 1.5 ATR |
+| Daily Loss Limit | 3% |
+| Maximum Peak Equity Drawdown | 25% |
 
 Volume dihitung berdasarkan risiko yang diperbolehkan dan jarak Stop Loss.
 
-### Stop Loss dan Take Profit
-
-```text
-Stop Loss  = 2.0 ATR
-Take Profit = 3.0 ATR
-```
-
-### Break-Even
-
-```text
-Break-Even Trigger = 1.0 ATR
-```
-
-### Trailing Stop
-
-```text
-Trailing Stop = 1.5 ATR
-```
-
-### Daily Loss Limit
-
-```text
-Daily Loss Limit = 3%
-```
-
-### Maximum Drawdown Protection
-
-```text
-Maximum Peak Equity Drawdown = 25%
-```
-
-### Position Limitation
-
-EA membatasi posisi sehingga tidak membuka banyak posisi pada simbol yang sama secara bersamaan.
+EA juga membatasi posisi sehingga tidak membuka banyak posisi pada simbol yang sama secara bersamaan.
 
 ## 5. Prinsip yang Tidak Digunakan
 
-EA ini **tidak menggunakan**:
+EA ini **tidak** menggunakan:
 
 * Martingale
 * Grid Trading
 * High Frequency Trading (HFT)
 
-Entry dibatasi pada **bar baru**, sehingga EA tidak melakukan entry berulang-ulang pada setiap tick.
+Entry dibatasi pada bar baru, sehingga EA tidak melakukan entry berulang-ulang pada setiap tick.
 
 ## 6. Optimasi Parameter
 
@@ -177,21 +167,11 @@ Optimasi dilakukan secara bertahap.
 
 ### Tahap 1 — Trend Parameters
 
-Parameter yang diuji:
-
-```text
-Fast EMA      : 30 – 70
-Slow EMA      : 150 – 250
-Minimum ADX  : 18 – 24
-```
-
-Hasil terbaik:
-
-```text
-Fast EMA     = 50
-Slow EMA     = 200
-Minimum ADX  = 21
-```
+| Parameter | Rentang Pengujian | Hasil Terbaik |
+|---|---|---|
+| Fast EMA | 30–70 | 50 |
+| Slow EMA | 150–250 | 200 |
+| Minimum ADX | 18–24 | 21 |
 
 Namun hasil pada tahap ini masih belum menghasilkan profit positif.
 
@@ -199,21 +179,11 @@ Namun hasil pada tahap ini masih belum menghasilkan profit positif.
 
 Parameter pullback, Stop Loss, dan Take Profit kemudian dioptimasi.
 
-Rentang pengujian:
-
-```text
-Pullback ATR : 0.20 – 0.80
-SL ATR       : 1.50 – 3.00
-TP ATR       : 2.00 – 4.00
-```
-
-Hasil terbaik tahap ini:
-
-```text
-Pullback ATR = 0.30
-SL           = 2.5 ATR
-TP           = 3.0 ATR
-```
+| Parameter | Rentang Pengujian | Hasil Terbaik |
+|---|---|---|
+| Pullback ATR | 0.20–0.80 | 0.30 |
+| SL ATR | 1.50–3.00 | 2.5 |
+| TP ATR | 2.00–4.00 | 3.0 |
 
 Namun performanya masih belum cukup baik.
 
@@ -228,117 +198,95 @@ Optimasi kemudian diperluas dengan:
 * RSI Sell Maximum
 * Minimum Candle Body Ratio
 
-Total kombinasi yang diuji:
+Total kombinasi yang diuji: **5,040 combinations**.
 
-```text
-5,040 combinations
-```
-
-Fast Genetic Optimization menghasilkan:
-
-```text
-1,280 passes
-```
+Fast Genetic Optimization menghasilkan **1,280 passes**.
 
 Parameter terbaik yang dipilih adalah **Pass 153**.
 
 ## 7. Parameter Pass 153
 
-```text
-Fast EMA            = 50
-Slow EMA            = 200
-ADX Period          = 14
-Minimum ADX         = 21
-
-Pullback ATR        = 0.20
-
-Buy RSI Minimum     = 45
-Buy RSI Maximum     = 60
-
-Sell RSI Minimum    = 28
-Sell RSI Maximum    = 45
-
-Minimum Body Ratio  = 0.60
-
-Risk Per Trade      = 0.75%
-
-Stop Loss           = 2.0 ATR
-Take Profit         = 3.0 ATR
-
-Break-Even          = 1.0 ATR
-Trailing Stop       = 1.5 ATR
-
-Daily Loss Limit    = 3%
-Maximum Drawdown    = 25%
-```
+| Parameter | Nilai |
+|---|---|
+| Fast EMA | 50 |
+| Slow EMA | 200 |
+| ADX Period | 14 |
+| Minimum ADX | 21 |
+| Pullback ATR | 0.20 |
+| Buy RSI Minimum | 45 |
+| Buy RSI Maximum | 60 |
+| Sell RSI Minimum | 28 |
+| Sell RSI Maximum | 45 |
+| Minimum Body Ratio | 0.60 |
+| Risk Per Trade | 0.75% |
+| Stop Loss | 2.0 ATR |
+| Take Profit | 3.0 ATR |
+| Break-Even | 1.0 ATR |
+| Trailing Stop | 1.5 ATR |
+| Daily Loss Limit | 3% |
+| Maximum Drawdown | 25% |
 
 ## 8. Hasil Backtest
 
 Pengujian dilakukan dengan konfigurasi:
 
-```text
-Symbol       : EURUSDm
-Timeframe    : H1
-Period       : 05 October 2019 – 05 October 2026
-Model        : Every Tick Based on Real Ticks
-Initial Fund : USD 10,000
-Leverage     : 1:1
-```
+| Item | Nilai |
+|---|---|
+| Symbol | EURUSDm |
+| Timeframe | H1 |
+| Period | 05 October 2019 – 05 October 2026 |
+| Model | Every Tick Based on Real Ticks |
+| Initial Fund | USD 10,000 |
+| Leverage | 1:1 |
 
 ### Hasil Backtest Penuh
 
-| Metric                     |       Result |
-| -------------------------- | -----------: |
-| Net Profit                 | **+$172.73** |
-| Gross Profit               |    $1,139.54 |
-| Gross Loss                 |     -$966.81 |
-| Profit Factor              |     **1.18** |
-| Expected Payoff            |        $1.16 |
-| Recovery Factor            |         0.85 |
-| Sharpe Ratio               |     **3.39** |
-| Maximum Balance DD         |        1.68% |
-| Maximum Equity DD          |    **2.01%** |
-| Total Trades               |          149 |
-| Profit Trades              |           88 |
-| Loss Trades                |           61 |
-| Win Rate                   |   **59.06%** |
-| Largest Profit             |       $86.94 |
-| Largest Loss               |      -$65.84 |
-| Maximum Consecutive Wins   |            9 |
-| Maximum Consecutive Losses |            5 |
+| Metrik | Nilai |
+|---|---|
+| Net Profit | +$172.73 |
+| Gross Profit | $1,139.54 |
+| Gross Loss | -$966.81 |
+| Profit Factor | 1.18 |
+| Expected Payoff | $1.16 |
+| Recovery Factor | 0.85 |
+| Sharpe Ratio | 3.39 |
+| Maximum Balance DD | 1.68% |
+| Maximum Equity DD | 2.01% |
+| Total Trades | 149 |
+| Profit Trades | 88 |
+| Loss Trades | 61 |
+| Win Rate | 59.06% |
+| Largest Profit | $86.94 |
+| Largest Loss | -$65.84 |
+| Maximum Consecutive Wins | 9 |
+| Maximum Consecutive Losses | 5 |
 
 ## 9. Forward Test
 
-Forward testing menggunakan:
-
-```text
-Forward Ratio = 1/3
-```
-
-dengan parameter Pass 153 yang telah dipilih dari proses optimasi.
+Forward testing menggunakan **Forward Ratio = 1/3** dengan parameter Pass 153 yang telah dipilih dari proses optimasi.
 
 ### Hasil Forward Test
 
-| Metric                     |       Result |
-| -------------------------- | -----------: |
-| Net Profit                 | **+$109.36** |
-| Profit Factor              |     **1.39** |
-| Expected Payoff            |        $2.54 |
-| Recovery Factor            |         1.03 |
-| Sharpe Ratio               |     **4.63** |
-| Maximum Equity DD          |    **1.05%** |
-| Total Trades               |           43 |
-| Profit Trades              |           26 |
-| Loss Trades                |           17 |
-| Win Rate                   |   **60.47%** |
-| Largest Profit             |       $86.94 |
-| Largest Loss               |      -$40.05 |
-| Maximum Consecutive Wins   |            5 |
-| Maximum Consecutive Losses |            4 |
+| Metrik | Nilai |
+|---|---|
+| Net Profit | +$109.36 |
+| Profit Factor | 1.39 |
+| Expected Payoff | $2.54 |
+| Recovery Factor | 1.03 |
+| Sharpe Ratio | 4.63 |
+| Maximum Equity DD | 1.05% |
+| Total Trades | 43 |
+| Profit Trades | 26 |
+| Loss Trades | 17 |
+| Win Rate | 60.47% |
+| Largest Profit | $86.94 |
+| Largest Loss | -$40.05 |
+| Maximum Consecutive Wins | 5 |
+| Maximum Consecutive Losses | 4 |
 
 Hasil forward test menunjukkan performa tetap positif setelah parameter hasil optimasi diterapkan pada bagian data forward.
 
-Namun jumlah transaksi forward hanya **43 trades**, sehingga hasil ini masih perlu diuji pada data yang lebih panjang sebelum dapat dianggap sebagai bukti robustness yang kuat.
+> **Catatan:** Jumlah transaksi forward hanya 43 trades, sehingga hasil ini masih perlu diuji pada data yang lebih panjang sebelum dapat dianggap sebagai bukti robustness yang kuat.
 
 ## 10. Evaluasi Performa
 
@@ -355,36 +303,26 @@ Dari sisi pengendalian risiko, hasil pengujian relatif konservatif.
 
 Namun, return yang diperoleh masih rendah dibandingkan target proyek.
 
-Target proyek:
-
-```text
-Target monthly return : 3–5%
-Target annual return  : 50–70%
-```
+| Target Proyek | Nilai |
+|---|---|
+| Target monthly return | 3–5% |
+| Target annual return | 50–70% |
 
 Hasil EURUSD pada pengujian tujuh tahun belum mencapai target tersebut.
 
-Oleh karena itu, hasil ini tidak boleh dipresentasikan sebagai strategi yang telah memenuhi seluruh target return.
+> **Penting:** Hasil ini tidak boleh dipresentasikan sebagai strategi yang telah memenuhi seluruh target return.
 
 ## 11. Keterbatasan Data
 
-Salah satu keterbatasan utama pengujian adalah:
-
-```text
-History Quality = 26%
-```
+Salah satu keterbatasan utama pengujian adalah **History Quality = 26%**.
 
 Pada terminal MetaTrader 5 yang digunakan, data tick historis tujuh tahun tidak tersedia secara lengkap untuk beberapa instrumen yang direncanakan.
 
 Pemeriksaan terhadap beberapa simbol menunjukkan bahwa data tick historis periode 2019 tidak tersedia pada terminal untuk beberapa instrumen.
 
-Karena itu, proyek ini **tidak mengarang atau memperkirakan hasil** untuk instrumen yang datanya tidak tersedia.
+Karena itu, proyek ini tidak mengarang atau memperkirakan hasil untuk instrumen yang datanya tidak tersedia.
 
-Hasil yang terdokumentasi secara kuantitatif dalam repository ini adalah:
-
-```text
-EURUSDm
-```
+Hasil yang terdokumentasi secara kuantitatif dalam repository ini adalah **EURUSDm**.
 
 Pengujian multi-asset sepuluh instrumen memerlukan dataset tick historis yang lengkap dan konsisten terlebih dahulu.
 
@@ -437,109 +375,49 @@ IG-MATPEA-Industrial-v5/
 ### Installation
 
 1. Buka MetaTrader 5.
-2. Pilih:
-
-```text
-File → Open Data Folder
-```
-
-3. Masuk ke:
-
-```text
-MQL5/Experts/
-```
-
-4. Salin file:
-
-```text
-IG_MATPEA_Industrial_v5.mq5
-```
-
-ke folder tersebut.
-
+2. Pilih **File → Open Data Folder**.
+3. Masuk ke folder `MQL5/Experts/`.
+4. Salin file `IG_MATPEA_Industrial_v5.mq5` ke folder tersebut.
 5. Buka MetaEditor.
-
-6. Buka:
-
-```text
-IG_MATPEA_Industrial_v5.mq5
-```
-
-7. Tekan:
-
-```text
-F7
-```
-
-untuk melakukan compile.
-
+6. Buka `IG_MATPEA_Industrial_v5.mq5`.
+7. Tekan **F7** untuk melakukan compile.
 8. Pastikan tidak terdapat error pada hasil compilation.
 
 ## 15. Menjalankan Backtest
 
-Buka:
+Buka **View → Strategy Tester**, kemudian gunakan konfigurasi:
 
-```text
-View → Strategy Tester
-```
-
-Kemudian gunakan konfigurasi:
-
-```text
-Expert:
-IG_MATPEA_Industrial_v5
-
-Symbol:
-EURUSDm
-
-Period:
-H1
-
-Model:
-Every tick based on real ticks
-
-From:
-2019.10.05
-
-To:
-2026.10.05
-
-Deposit:
-10000 USD
-
-Leverage:
-1:1
-```
+| Setting | Nilai |
+|---|---|
+| Expert | IG_MATPEA_Industrial_v5 |
+| Symbol | EURUSDm |
+| Period | H1 |
+| Model | Every tick based on real ticks |
+| From | 2019.10.05 |
+| To | 2026.10.05 |
+| Deposit | 10000 USD |
+| Leverage | 1:1 |
 
 Gunakan parameter Pass 153:
 
-```text
-Fast EMA            = 50
-Slow EMA            = 200
-Minimum ADX         = 21
-Pullback ATR        = 0.20
+| Parameter | Nilai |
+|---|---|
+| Fast EMA | 50 |
+| Slow EMA | 200 |
+| Minimum ADX | 21 |
+| Pullback ATR | 0.20 |
+| Buy RSI Min | 45 |
+| Buy RSI Max | 60 |
+| Sell RSI Min | 28 |
+| Sell RSI Max | 45 |
+| Minimum Body Ratio | 0.60 |
+| Risk Per Trade | 0.75% |
+| SL ATR | 2.0 |
+| TP ATR | 3.0 |
+| Break-even ATR | 1.0 |
+| Trailing ATR | 1.5 |
 
-Buy RSI Min         = 45
-Buy RSI Max         = 60
-
-Sell RSI Min        = 28
-Sell RSI Max        = 45
-
-Minimum Body Ratio  = 0.60
-
-Risk Per Trade      = 0.75%
-SL ATR              = 2.0
-TP ATR              = 3.0
-
-Break-even ATR      = 1.0
-Trailing ATR        = 1.5
-```
-
-Kemudian klik:
-
-```text
-Start
-```
+Kemudian klik **Start**.
 
 ## 16. Forward Testing
 
@@ -548,12 +426,7 @@ Untuk melakukan forward test:
 1. Buka Strategy Tester.
 2. Gunakan parameter Pass 153.
 3. Aktifkan bagian **Forward**.
-4. Pilih:
-
-```text
-1/3
-```
-
+4. Pilih **1/3**.
 5. Jalankan Strategy Tester.
 6. Simpan report hasil pengujian.
 
@@ -571,41 +444,32 @@ Hasil backtest dan forward test:
 * dapat mengalami slippage, spread, dan kondisi likuiditas yang berbeda;
 * tidak boleh dianggap sebagai jaminan performa pada akun real.
 
-EA dalam proyek ini dikembangkan untuk **pengujian dan evaluasi**, bukan sebagai jaminan keuntungan finansial.
+EA dalam proyek ini dikembangkan untuk pengujian dan evaluasi, bukan sebagai jaminan keuntungan finansial.
 
 ## 18. Kesimpulan
 
-IG-MATPEA Industrial v5 berhasil dikembangkan sebagai Expert Advisor MetaTrader 5 dengan pendekatan trend-following dan pullback.
+IG-MATPEA Industrial v5 berhasil dikembangkan sebagai Expert Advisor MetaTrader 5 dengan pendekatan *trend-following* dan *pullback*.
 
 EA menggunakan kombinasi:
 
-```text
-EMA
-ADX
-DI+ / DI-
-RSI
-ATR
-Candle Quality
-Risk Management
-Break-even
-Trailing Stop
-```
+* EMA
+* ADX
+* DI+ / DI-
+* RSI
+* ATR
+* Candle Quality
+* Risk Management
+* Break-even
+* Trailing Stop
 
-Parameter Pass 153 memberikan hasil positif pada EURUSDm:
+Parameter Pass 153 memberikan hasil positif pada EURUSDm.
 
-```text
-Backtest:
-Net Profit       = +$172.73
-Profit Factor    = 1.18
-Sharpe Ratio     = 3.39
-Max Equity DD    = 2.01%
-
-Forward Test:
-Net Profit       = +$109.36
-Profit Factor    = 1.39
-Sharpe Ratio     = 4.63
-Max Equity DD    = 1.05%
-```
+| Metrik | Backtest | Forward Test |
+|---|---|---|
+| Net Profit | +$172.73 | +$109.36 |
+| Profit Factor | 1.18 | 1.39 |
+| Sharpe Ratio | 3.39 | 4.63 |
+| Max Equity DD | 2.01% | 1.05% |
 
 Hasil tersebut menunjukkan bahwa strategi memiliki performa positif pada pengujian yang dilakukan, khususnya dari sisi pengendalian drawdown.
 
@@ -615,9 +479,7 @@ Pengujian 10 instrumen secara penuh akan dilakukan setelah dataset historis yang
 
 ## Project Status
 
-**Current Version:** `v5.00`
-
-**Status:**
+**Current Version:** v5.00
 
 * [x] EA MQL5 developed
 * [x] Compile successfully
@@ -630,7 +492,3 @@ Pengujian 10 instrumen secara penuh akan dilakukan setelah dataset historis yang
 * [x] Forward test
 * [ ] Complete 10-instrument historical validation
 * [ ] Extended out-of-sample validation
-
-```
-```
-
